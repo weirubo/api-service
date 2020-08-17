@@ -1,0 +1,17 @@
+-- 创建数据库
+CREATE DATABASE IF NOT EXISTS api_service DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+
+-- 创建用户表
+CREATE TABLE `t_user`(
+`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+`name` VARCHAR(100) DEFAULT '' COMMENT '用户名',
+`state` TINYINT(3) UNSIGNED DEFAULT '1' COMMENT '状态 0 为禁用、1 为启用',
+`pass_word` VARCHAR(100) NOT NULL COMMENT '密码',
+`created_on` INT(10) UNSIGNED DEFAULT '0' COMMENT '创建时间',
+`created_by` VARCHAR(100) DEFAULT '' COMMENT '创建人',
+`modified_on` INT(10) UNSIGNED DEFAULT '0' COMMENT '修改时间',
+`modified_by` VARCHAR(100) DEFAULT '' COMMENT '修改人',
+`deleted_on` INT(10) UNSIGNED DEFAULT '0' COMMENT '删除时间',
+`is_del` TINYINT(3) UNSIGNED DEFAULT '0' COMMENT '是否删除 0 为未删除、1 为已删除',
+PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
