@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/weirubo/api-service/global"
+	"github.com/weirubo/api-service/internal/model"
 	"github.com/weirubo/api-service/internal/routers"
 	"github.com/weirubo/api-service/pkg/setting"
 )
@@ -15,6 +15,11 @@ func init() {
 	err := setupSetting()
 	if err != nil {
 		log.Fatalf("init.setupSetting err: %v", err)
+	}
+
+	err = setupDBEngine()
+	if err != nil {
+		log.Fatalf("init.setupDBEngine err: %v", err)
 	}
 }
 
@@ -26,10 +31,10 @@ func main() {
 
 	// 自定义 http.Server
 	s := &http.Server{
-		Addr:         ":8080",          // 监听端口
-		Handler:      router,           // 处理程序
-		ReadTimeout:  10 * time.Second, // 允许读取的最大时间
-		WriteTimeout: 10 * time.Second, // 允许写入的最大时间
+		Addr:         ":" + global.ServerSetting.HttpPort, // 监听端口
+		Handler:      router,                              // 处理程序
+		ReadTimeout:  global.ServerSetting.ReadTimeout,    // 允许读取的最大时间
+		WriteTimeout: global.ServerSetting.WriteTimeout,   // 允许写入的最大时间
 		// MaxHeaderBytes: 1 << 20,          // 请求头的最大字节数
 		MaxHeaderBytes: 1024 * 1024, // 请求头的最大字节数
 	}
@@ -48,6 +53,16 @@ func setupSetting() error {
 	}
 
 	err = setting.ReadSection("Database", &global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// 初始化 DB
+func setupDBEngine() error {
+	var err error
+	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
