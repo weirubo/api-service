@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/weirubo/api-service/global"
@@ -24,8 +25,8 @@ func init() {
 }
 
 func main() {
-	log.Printf("ServerSetting:%#v", global.ServerSetting)
-	log.Printf("DatabaseSetting:%#v", global.DatabaseSetting)
+	// log.Printf("ServerSetting:%#v", global.ServerSetting)
+	// log.Printf("DatabaseSetting:%#v", global.DatabaseSetting)
 	gin.SetMode(global.ServerSetting.RunMode) // gin 的运行模式
 	router := routers.NewRouter()
 
@@ -56,6 +57,9 @@ func setupSetting() error {
 	if err != nil {
 		return err
 	}
+
+	global.ServerSetting.ReadTimeout *= time.Second
+	global.ServerSetting.WriteTimeout *= time.Second
 	return nil
 }
 

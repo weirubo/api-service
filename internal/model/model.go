@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/weirubo/api-service/global"
 	"github.com/weirubo/api-service/pkg/setting"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -33,10 +34,10 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettingS) (*gorm.DB, error) {
 	}
 
 	// SetMaxIdleConns 用于设置连接池中空闲连接的最大数量。
-	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxIdleConns(global.DatabaseSetting.MaxIdleConns)
 
 	// SetMaxOpenConns 设置打开数据库连接的最大数量。
-	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetMaxOpenConns(global.DatabaseSetting.MaxOpenConns)
 
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(time.Hour)
