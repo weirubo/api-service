@@ -20,6 +20,7 @@ func init() {
 
 func main() {
 	log.Printf("ServerSetting:%#v", global.ServerSetting)
+	log.Printf("DatabaseSetting:%#v", global.DatabaseSetting)
 	gin.SetMode(global.ServerSetting.RunMode) // gin 的运行模式
 	router := routers.NewRouter()
 
@@ -42,6 +43,11 @@ func setupSetting() error {
 		return err
 	}
 	err = setting.ReadSection("Server", &global.ServerSetting)
+	if err != nil {
+		return err
+	}
+
+	err = setting.ReadSection("Database", &global.DatabaseSetting)
 	if err != nil {
 		return err
 	}
