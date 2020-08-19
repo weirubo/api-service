@@ -15,12 +15,12 @@ import (
 func init() {
 	err := setupSetting()
 	if err != nil {
-		log.Fatalf("init.setupSetting err: %v", err)
+		log.Printf("init.setupSetting err: %v", err)
 	}
 
 	err = setupDBEngine()
 	if err != nil {
-		log.Fatalf("init.setupDBEngine err: %v", err)
+		log.Printf("init.setupDBEngine err: %v", err)
 	}
 }
 

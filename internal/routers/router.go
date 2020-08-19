@@ -22,6 +22,9 @@ func NewRouter() *gin.Engine {
 			c.JSON(200, "add user success!")
 		}) */
 		apiv1.POST("/users", user.Create)
+		apiv1.DELETE("/users/:id", user.Delete)
+		apiv1.PUT("/users/:id", user.Update)
+		apiv1.GET("/users/:id", user.Get)
 		apiv1.GET("/users", user.List)
 	}
 

@@ -9,12 +9,12 @@ import (
 // 响应处理
 
 type Response struct {
-	Ctx *gin.Context
+	C *gin.Context
 }
 
-func NewResponse(ctx *gin.Context) *Response {
+func NewResponse(c *gin.Context) *Response {
 	return &Response{
-		Ctx: ctx,
+		C: c,
 	}
 }
 
@@ -22,5 +22,5 @@ func (r *Response) ToResponse(data interface{}) {
 	if data == nil {
 		data = gin.H{}
 	}
-	r.Ctx.JSON(http.StatusOK, data)
+	r.C.JSON(http.StatusOK, data)
 }
